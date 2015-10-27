@@ -7,12 +7,11 @@
 //
 
 import UIKit
-import CoreLocation
 
-class WeatherViewController: UIViewController, CLLocationManagerDelegate, CityTableViewProtocol {
+class WeatherViewController: UIViewController, CityTableViewProtocol {
 
-    // constant instances
-    let locationManager = CLLocationManager()
+    // shared instances
+    let locationManager = LocationManagerSingleton.sharedInstance
     let model = Model.sharedInstance
     
     // locals 
@@ -21,19 +20,26 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, CityTa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Set the location delegate and desired accuracy
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        
+        // Setup the model to get info about the default city
+        model.setupDefaultCity()
+        
+        // If API calls succeeded and we have the info about the default city, show it
+        if let defaultCity = model.defaultCityToShow() {
+            
+        } else {
+            NSLog("Failed to get info about the default city")
+        }
+        
     }
     
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        if CLLocationManager.locationServicesEnabled()  {
-            if CLLocationManager.authorizationStatus() == .NotDetermined {
-                locationManager.requestWhenInUseAuthorization()
+        if locationManager.locationServicesEnabled()  {
+            if  locationManager.authorizationStatus() == .NotDetermined {
+                locationManager.locationManager!.requestWhenInUseAuthorization()
             }
         }
     }
@@ -45,19 +51,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, CityTa
 
     
     func displayNewCity() {
-        
-    }
-    
-    
-    // MARK: CLLocationManagerDelegate
-    // If location authorization changes, handle it here
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
-
-        }
-        else {
-
-        }
+        // update labels
     }
     
     

@@ -17,6 +17,7 @@
 		623832D01BDFE65400615520 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623832CF1BDFE65400615520 /* City.swift */; settings = {ASSET_TAGS = (); }; };
 		623832D61BDFEABF00615520 /* CityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623832D51BDFEABF00615520 /* CityTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		623832D81BDFEAEB00615520 /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623832D71BDFEAEB00615520 /* CityTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		623832DA1BDFF2AB00615520 /* LocationManagerSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623832D91BDFF2AB00615520 /* LocationManagerSingleton.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		623832CF1BDFE65400615520 /* City.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		623832D51BDFEABF00615520 /* CityTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewController.swift; sourceTree = "<group>"; };
 		623832D71BDFEAEB00615520 /* CityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
+		623832D91BDFF2AB00615520 /* LocationManagerSingleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManagerSingleton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 				623832CA1BDFE42800615520 /* Model.swift */,
 				623832CF1BDFE65400615520 /* City.swift */,
 				623832D71BDFEAEB00615520 /* CityTableViewCell.swift */,
+				623832D91BDFF2AB00615520 /* LocationManagerSingleton.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -249,6 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				623832D81BDFEAEB00615520 /* CityTableViewCell.swift in Sources */,
+				623832DA1BDFF2AB00615520 /* LocationManagerSingleton.swift in Sources */,
 				623832CB1BDFE42800615520 /* Model.swift in Sources */,
 				623832AD1BDFDCB800615520 /* WeatherViewController.swift in Sources */,
 				623832D61BDFEABF00615520 /* CityTableViewController.swift in Sources */,
@@ -443,6 +447,7 @@
 				623832C61BDFDCB800615520 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		623832C71BDFDCB800615520 /* Build configuration list for PBXNativeTarget "WeatherTests" */ = {
 			isa = XCConfigurationList;
@@ -451,6 +456,7 @@
 				623832C91BDFDCB800615520 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

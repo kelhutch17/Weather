@@ -12,7 +12,7 @@ import CoreLocation
 class LocationManagerSingleton: NSObject, CLLocationManagerDelegate {
 
     static let sharedInstance = LocationManagerSingleton()
-    var locationManager:CLLocationManager?
+    var locationManager = CLLocationManager()
     var currentLocation:CLLocation?
     let model = Model.sharedInstance
     
@@ -20,9 +20,8 @@ class LocationManagerSingleton: NSObject, CLLocationManagerDelegate {
     
     override init() {
         super.init()
-        self.locationManager = CLLocationManager()
-        self.locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-        self.locationManager?.delegate = self
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.locationManager.delegate = self
         
         notificationKey = model.notificationKey()
         
@@ -34,11 +33,11 @@ class LocationManagerSingleton: NSObject, CLLocationManagerDelegate {
     }
     
     func startUpdatingLocation() {
-        locationManager?.startUpdatingLocation()
+        locationManager.startUpdatingLocation()
     }
     
     func stopUpdatingLocation() {
-        locationManager?.stopUpdatingLocation()
+        locationManager.stopUpdatingLocation()
     }
     
     func locationServicesEnabled() -> Bool {
@@ -49,6 +48,9 @@ class LocationManagerSingleton: NSObject, CLLocationManagerDelegate {
         return CLLocationManager.authorizationStatus()
     }
     
+    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+        self.currentLocation = newLocation
+    }
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.currentLocation = locations.last
     }

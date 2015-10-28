@@ -39,7 +39,7 @@ class WeatherViewController: UIViewController, CityTableViewProtocol {
         
         if locationManager.locationServicesEnabled()  {
             if  locationManager.authorizationStatus() == .NotDetermined {
-                locationManager.locationManager!.requestWhenInUseAuthorization()
+                locationManager.locationManager.requestWhenInUseAuthorization()
             }
         }
     }
@@ -66,6 +66,23 @@ class WeatherViewController: UIViewController, CityTableViewProtocol {
         
         // dismiss the presented view controller
         dismissViewControllerAnimated(true, completion: completionBlock)
+    }
+    
+    func cityTableViewDismissed() {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        switch segue.identifier! {
+        case "addNewLocation":
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let destinationViewController = navigationController.topViewController as! CityTableViewController
+            destinationViewController.delegate = self
+            break
+        default:
+            NSLog("Unhandled segue")
+            break
+        }
     }
 
 }

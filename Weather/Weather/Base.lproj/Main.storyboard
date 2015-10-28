@@ -21,7 +21,7 @@
                     <navigationItem key="navigationItem" title="Weather" id="uI4-AH-KUr">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="4He-go-BF4">
                             <connections>
-                                <segue destination="UBa-MM-Rue" kind="presentation" identifier="addNewLocation" id="vu9-Hm-8kT"/>
+                                <segue destination="Evl-e0-KNM" kind="presentation" identifier="addNewLocation" id="vu9-Hm-8kT"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -30,7 +30,7 @@
             </objects>
             <point key="canvasLocation" x="1092" y="337"/>
         </scene>
-        <!--City Table View Controller-->
+        <!--Cities-->
         <scene sceneID="cdS-ZD-20t">
             <objects>
                 <tableViewController id="UBa-MM-Rue" customClass="CityTableViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
@@ -40,7 +40,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="userLocationCell" id="Get-Zj-ALO">
-                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Get-Zj-ALO" id="pcr-5P-jWa">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -60,7 +60,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cityCustomCell" id="yaq-tr-8Rz" customClass="CityTableViewCell" customModule="Weather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="136" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yaq-tr-8Rz" id="XDb-pR-UYS">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -114,10 +114,17 @@
                             <outlet property="delegate" destination="UBa-MM-Rue" id="9L9-Lj-CRd"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Cities" id="J48-cd-TFy">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="MS0-Tp-q3I">
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="UBa-MM-Rue" id="aMs-05-S7P"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KOU-PS-GIu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1788" y="337"/>
+            <point key="canvasLocation" x="2600" y="337"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="F1y-Zb-xAi">
@@ -136,6 +143,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Ku-hB-jlA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="267" y="337"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Ajp-2C-KWG">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Evl-e0-KNM" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="zGr-I8-LAX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="UBa-MM-Rue" kind="relationship" relationship="rootViewController" id="KMu-Sa-ved"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qtT-V8-bkE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1788" y="337"/>
         </scene>
     </scenes>
 </document>

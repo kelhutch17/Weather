@@ -15,11 +15,6 @@ protocol CityTableViewProtocol {
 }
 
 class CityTableViewController: UITableViewController {
-
-    enum TemperatureScale: String {
-        case Celsius = "metric"
-        case Fahrenheit = "imperial"
-    }
     
     // Constants
     let numSections = 2
@@ -27,7 +22,9 @@ class CityTableViewController: UITableViewController {
     // locals
     let model = Model.sharedInstance
     let locationManager = LocationManagerSingleton.sharedInstance
-    let weatherAPI = OpenWeatherMap(language: "en", temperatureScale: TemperatureScale.Fahrenheit.rawValue, APIKey: "242dcb57484b603f1a9a2ba52556ee85")
+    var weatherAPI:OpenWeatherMap?
+    
+    var city:City?
 
     var delegate:CityTableViewProtocol?
     
@@ -39,6 +36,8 @@ class CityTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
+        // initialize API caller
+        weatherAPI = OpenWeatherMap(language: "en", temperatureScale: Model.TemperatureScale.Fahrenheit.rawValue, APIKey: model.apiKeyValue())
         
         // Add notification listener
         notificationKey = model.notificationKey()
@@ -92,9 +91,13 @@ class CityTableViewController: UITableViewController {
             
             let city = model.cityForRow(row)
             cell.city = city
-            cell.cityNameLabel.text = city.cityName
-            cell.temperatureLabel.text = city.temperature.description
-            cell.weatherImageView.image = UIImage(named: city.weatherImageName)
+            cell.cityNameLabel.text = city.cityNameValue()
+            cell.temperatureLabel.text = city.temperatureValue()!.description
+            
+            if let imageName = city.weatherImageNameValue() {
+                cell.weatherImageView.image = UIImage(named: imageName)
+            }
+            
             return cell
         }
         
@@ -129,7 +132,7 @@ class CityTableViewController: UITableViewController {
                 }
                 else {
                     if let delegate = delegate {
-                        delegate.newCitySelected(newCityForUserLocation()!)
+                        newCityForUserLocation()
                     }
                     else {
                         NSLog("Delegate not set")
@@ -185,34 +188,29 @@ class CityTableViewController: UITableViewController {
         presentViewController(alertViewController, animated: true, completion: nil)
     }
     
-    func newCityForUserLocation() -> City? {
+    func newCityForUserLocation() {
         
-        let currentLocation = locationManager.currentLocation
-        
-        // make API calls here
-        if let jsonData = weatherAPI.findCityForCoordinate(currentLocation!.coordinate) {
-            let cityName = jsonData["name"] as! String
+        if let currentLocation = locationManager.currentLocation {
+            // make API calls here
+            if let weatherAPI = weatherAPI {
+                weatherAPI.weatherForCoordinate(currentLocation.coordinate, callback: { result in
+                    if let dictionary = result {
+                        let name = dictionary["name"] as! String
+                        
+                        let weather = dictionary["main"] as? Dictionary<String, AnyObject>
+                        if let weatherDict = weather {
+                            let temp = weatherDict["temp"]
+                            
+                            self.delegate!.newCitySelected(City(cityName: name, temperature: temp as! Double, temperatureScale: Model.TemperatureScale.Fahrenheit, weatherImageName: ""))
+                        }
+                        
+                    }
+                    else {
+                        print("error")
+                    }
+                })
+            }
         }
-            
-//            { result in
-//            
-//        if let resultType = result.1 {
-//            if resultType is NSError {
-//                let error = resultType as! NSError
-//                NSLog(error.description)
-//            } else if resultType is Dictionary<String, AnyObject> {
-//                theResult = resultType as! Dictionary<String, AnyObject>
-//            }
-//        }
-//    }
-        
-        
-        //        let cityName = model.cityNameForLocation(location)
-        //        let temperature = model.temperatureFor
-        //
-        //        var newCity = City(cityName: cityName, temperature: <#T##Int#>, temperatureScale: <#T##String#>, weatherImageName: <#T##String#>)
-        
-        return nil
     }
     
     @IBAction func cancelButtonPressed(sender: UIBarButtonItem) {

@@ -9,12 +9,19 @@
 import Foundation
 
 class City: NSObject {
-    let cityName: String
-    let temperature: Int
-    let temperatureScale: String
-    let weatherImageName: String
+    private let cityName: String
+    private var temperature: Double?
+    private let temperatureScale: Model.TemperatureScale
+    private var weatherImageName: String?
     
-    init(cityName:String, temperature:Int, temperatureScale:String, weatherImageName:String) {
+    // Setup if you do not have the weather info yet
+    init(cityName:String, temperatureScale:Model.TemperatureScale) {
+        self.cityName = cityName
+        self.temperatureScale = temperatureScale
+        super.init()
+    }
+    
+    init(cityName:String, temperature:Double, temperatureScale:Model.TemperatureScale, weatherImageName:String) {
         
         self.cityName = cityName
         self.temperature = temperature
@@ -22,5 +29,25 @@ class City: NSObject {
         self.weatherImageName = weatherImageName
         
         super.init()
+    }
+    
+    func updateTemperature(newTemp:Double) {
+        temperature = newTemp
+    }
+    
+    func cityNameValue() -> String {
+        return cityName
+    }
+    
+    func temperatureValue() -> Double? {
+        return temperature
+    }
+    
+    func temperatureScaleValue() -> Model.TemperatureScale {
+        return temperatureScale
+    }
+    
+    func weatherImageNameValue() -> String? {
+        return weatherImageName
     }
 }

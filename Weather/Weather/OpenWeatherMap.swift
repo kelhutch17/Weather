@@ -15,10 +15,7 @@ class OpenWeatherMap: NSObject {
     private let APIKey:String
     
     // Base level URL to request data from
-    private let baseURL = "api.openweathermap.org/data/2.5/"
-    
-    // Response Queue
-    private var queue: NSOperationQueue
+    private let baseURL = "http://api.openweathermap.org/data/2.5"
     
     // local variables
     var language:String
@@ -28,74 +25,56 @@ class OpenWeatherMap: NSObject {
         self.language = language
         self.APIKey = APIKey
         self.temperatureScale = temperatureScale
-        self.queue = NSOperationQueue()
     }
     
     
-//    func weatherForCityName(cityName: String, callback: (NSURLResponse?, AnyObject?) -> ()) {
-//        call("/weather?q=\(cityName)", callback: callback)
-//    }
-//    
-//    func weatherForCoordinate(coordinate: CLLocationCoordinate2D, callback: (NSURLResponse?, AnyObject?) -> ()) {
-//        let coordinateString = "lat=\(coordinate.latitude)&lon=\(coordinate.longitude)"
-//        call("/weather?\(coordinateString)", callback: callback)
-//    }
-//    
-//    func findCityForName(cityName: String, callback: (NSURLResponse?, AnyObject?) -> ()) {
-//        call("/find?q=\(cityName)", callback: callback)
-//    }
-    
-    func findCityForCoordinate(coordinate: CLLocationCoordinate2D) -> Dictionary<String, AnyObject?>? {
-        let callResponse = call("/find?lat=\(coordinate.latitude)&lon=\(coordinate.longitude)")
-        
-        if callResponse.0 != nil {
-            NSLog("Failed to parse JSON for coordinate")
-            return nil
-        } else {
-            return callResponse.1
-        }
+    func weatherForCityName(cityName: String, callback: (NSDictionary?) -> ()) {
+        call("/weather?q=\(cityName.removeSpaces())", callback: callback)
     }
     
-    func call(operation:String) -> (NSError?, Dictionary<String, AnyObject?>) {
-        let url = baseURL + operation + "&APPID=\(APIKey)&lang=\(language)&units=\(temperatureScale)"
-        let data = NSData(contentsOfURL: NSURL(string: url)!)!
-        var responseError:NSError?
-        var jsonResponse:Dictionary<String, AnyObject?>?
-        //let request = NSURLRequest(URL: NSURL(string: url)!)
+    func weatherForCoordinate(coordinate: CLLocationCoordinate2D, callback: (NSDictionary?) -> ()) {
+        let coordinateString = "lat=\(coordinate.latitude)&lon=\(coordinate.longitude)"
+        call("/weather?\(coordinateString)", callback: callback)
+    }
+    
+    func findCityForName(cityName: String, callback: (NSDictionary?) -> ()) {
+        call("/find?q=\(cityName.removeSpaces())", callback: callback)
+    }
+    
+    func findCityForCoordinate(coordinate: CLLocationCoordinate2D, callback: (NSDictionary?) -> ()) {
+        call("/find?lat=\(coordinate.latitude)&lon=\(coordinate.longitude)", callback: callback)
+    }
+    
+    private func call(operation: String, callback: (NSDictionary?) -> ()) {
+        let urlPath = baseURL + operation + "&APPID=\(APIKey)&lang=\(language)&units=\(temperatureScale)"
+        let url = NSURL(string: urlPath)
         
+        assert(url != nil, "URL is invalid")
         
-        do {
-            if let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? Dictionary<String, AnyObject?> {
-                jsonResponse = json
+        let queue = NSOperationQueue.currentQueue()
+        
+        let session = NSURLSession.sharedSession()
+        session.dataTaskWithURL(url!, completionHandler: {
+            (data, response, error) -> Void in
+            
+            var error: NSError? = error
+            var dictionary: NSDictionary?
+            
+            if let data = data {
+                do {
+                    dictionary = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSDictionary
+                } catch let e as NSError {
+                    error = e
+                }
             }
-        } catch let error as NSError {
-            responseError = error
-        }
-        
-        return(responseError, jsonResponse!)
+            queue?.addOperationWithBlock {
+                let result = dictionary
+                if error != nil {
+                    NSLog((error?.description)!)
+                }
+                callback(result)
+            }
+            
+        }).resume()
     }
-//
-//        // change to NSURLSession
-//        NSURLConnection.sendAsynchronousRequest(request, queue: queue, completionHandler: { (response: NSURLResponse?, data: NSData?, error: NSError?) -> Void in
-//            var error: NSError? = error
-//            var dictionary: NSDictionary?
-//            
-//            if let data = data {
-//                do {
-//                    dictionary = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSDictionary
-//                } catch let e as NSError {
-//                    error = e
-//                }
-//            }
-//            
-//            currentQueue?.addOperationWithBlock {
-//                // check for error
-//                if error != nil {
-//                    callback(response, error)
-//                } else {
-//                    callback(response, dictionary)
-//                }
-//            }
-//        }
-    //}
 }

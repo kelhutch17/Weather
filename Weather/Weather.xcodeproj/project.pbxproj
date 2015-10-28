@@ -13,12 +13,13 @@
 		623832B21BDFDCB800615520 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 623832B11BDFDCB800615520 /* Assets.xcassets */; };
 		623832B51BDFDCB800615520 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 623832B31BDFDCB800615520 /* LaunchScreen.storyboard */; };
 		623832C01BDFDCB800615520 /* WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623832BF1BDFDCB800615520 /* WeatherTests.swift */; };
-		623832CB1BDFE42800615520 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623832CA1BDFE42800615520 /* Model.swift */; settings = {ASSET_TAGS = (); }; };
-		623832D01BDFE65400615520 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623832CF1BDFE65400615520 /* City.swift */; settings = {ASSET_TAGS = (); }; };
-		623832D61BDFEABF00615520 /* CityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623832D51BDFEABF00615520 /* CityTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		623832D81BDFEAEB00615520 /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623832D71BDFEAEB00615520 /* CityTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
-		623832DA1BDFF2AB00615520 /* LocationManagerSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623832D91BDFF2AB00615520 /* LocationManagerSingleton.swift */; settings = {ASSET_TAGS = (); }; };
-		629008101BE07CE4002208D0 /* OpenWeatherMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6290080F1BE07CE4002208D0 /* OpenWeatherMap.swift */; settings = {ASSET_TAGS = (); }; };
+		623832CB1BDFE42800615520 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623832CA1BDFE42800615520 /* Model.swift */; };
+		623832D01BDFE65400615520 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623832CF1BDFE65400615520 /* City.swift */; };
+		623832D61BDFEABF00615520 /* CityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623832D51BDFEABF00615520 /* CityTableViewController.swift */; };
+		623832D81BDFEAEB00615520 /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623832D71BDFEAEB00615520 /* CityTableViewCell.swift */; };
+		623832DA1BDFF2AB00615520 /* LocationManagerSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623832D91BDFF2AB00615520 /* LocationManagerSingleton.swift */; };
+		629008101BE07CE4002208D0 /* OpenWeatherMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6290080F1BE07CE4002208D0 /* OpenWeatherMap.swift */; };
+		62D678981BE1701E003AE3FE /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D678971BE1701E003AE3FE /* StringExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		623832D71BDFEAEB00615520 /* CityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
 		623832D91BDFF2AB00615520 /* LocationManagerSingleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManagerSingleton.swift; sourceTree = "<group>"; };
 		6290080F1BE07CE4002208D0 /* OpenWeatherMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenWeatherMap.swift; sourceTree = "<group>"; };
+		62D678971BE1701E003AE3FE /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,7 @@
 				623832CF1BDFE65400615520 /* City.swift */,
 				623832D71BDFEAEB00615520 /* CityTableViewCell.swift */,
 				6290080F1BE07CE4002208D0 /* OpenWeatherMap.swift */,
+				62D678971BE1701E003AE3FE /* StringExtension.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				623832CB1BDFE42800615520 /* Model.swift in Sources */,
 				623832AD1BDFDCB800615520 /* WeatherViewController.swift in Sources */,
 				623832D61BDFEABF00615520 /* CityTableViewController.swift in Sources */,
+				62D678981BE1701E003AE3FE /* StringExtension.swift in Sources */,
 				623832D01BDFE65400615520 /* City.swift in Sources */,
 				623832AB1BDFDCB800615520 /* AppDelegate.swift in Sources */,
 				629008101BE07CE4002208D0 /* OpenWeatherMap.swift in Sources */,

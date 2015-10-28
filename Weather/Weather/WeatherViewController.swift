@@ -17,22 +17,19 @@ class WeatherViewController: UIViewController, CityTableViewProtocol {
     // locals 
     var city:City?
     
+    @IBOutlet weak var cityNameLabel: UILabel!
+    @IBOutlet weak var temperatureLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Setup the model to get info about the default city
-        model.setupDefaultCity()
+        setupDefaultCity()
         
         // If API calls succeeded and we have the info about the default city, show it
-        if let defaultCity = model.defaultCityToShow() {
-            
-        } else {
-            NSLog("Failed to get info about the default city")
-        }
+        
         
     }
-    
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -48,10 +45,40 @@ class WeatherViewController: UIViewController, CityTableViewProtocol {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    func setupDefaultCity() {
+        
+        // create new city object and add to array at index 0
+        city = City(cityName: model.defaultCityNameString(), temperatureScale: Model.TemperatureScale.Fahrenheit)
+        
+        cityNameLabel.text = city?.cityNameValue()
+        
+        // Make API calls for default city (Mountain View)
+        let weatherAPI = OpenWeatherMap(language: "en", temperatureScale: Model.TemperatureScale.Fahrenheit.rawValue, APIKey: model.apiKeyValue())
+        
+        weatherAPI.weatherForCityName(city!.cityNameValue(), callback: { result in
+            if let dictionary = result {
+                let weather = dictionary["main"] as? Dictionary<String, AnyObject>
+                
+                if let weatherDict = weather {
+                    let temp = weatherDict["temp"]
+                    self.city!.updateTemperature(temp as! Double)
+                    self.temperatureLabel.text = self.city?.temperatureValue()?.description
+                }
+                
+            }
+            else {
+                print("error")
+            }
+        })
+    }
 
     
     func displayNewCity() {
         // update labels
+        cityNameLabel.text = city?.cityNameValue()
+        self.temperatureLabel.text = self.city?.temperatureValue()?.description
     }
     
     

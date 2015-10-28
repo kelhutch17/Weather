@@ -10,21 +10,21 @@ import Foundation
 
 class Model
 {
+    enum TemperatureScale: String {
+        case Celsius = "metric"
+        case Fahrenheit = "imperial"
+    }
+    
     // Local Variables
     static let sharedInstance = Model()
     private var cities = [City]()
-    private var defaultCity:City?
+
+    private let defaultCityName = "Mountain View"
     
     private let authorizationStatusNotificationKey = "AuthorizationStatusChanged"
+    private let apiKey = "242dcb57484b603f1a9a2ba52556ee85"
     
     private init () {
-    }
-    
-    func setupDefaultCity() {
-        // Make API calls for default city (Mountain View)
-        
-        // create new city object and add to array at index 0
-        
     }
     
     func notificationKey() -> String {
@@ -39,7 +39,11 @@ class Model
         return cities[row]
     }
     
-    func defaultCityToShow() -> City? {
-        return defaultCity
+    func defaultCityNameString() -> String {
+        return defaultCityName
+    }
+    
+    func apiKeyValue() -> String {
+        return apiKey
     }
 }

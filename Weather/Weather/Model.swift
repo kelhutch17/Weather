@@ -20,6 +20,7 @@ class Model
     private var cities = [City]()
 
     private let defaultCityName = "Mountain View"
+    private let defaultCityID = 5375480
     
     private let authorizationStatusNotificationKey = "AuthorizationStatusChanged"
     private let apiKey = "242dcb57484b603f1a9a2ba52556ee85"
@@ -43,7 +44,19 @@ class Model
         return defaultCityName
     }
     
+    func defaultCityIDValue() -> Int {
+        return defaultCityID
+    }
+    
     func apiKeyValue() -> String {
         return apiKey
+    }
+    
+    func addNewCity(city:City) {
+        cities.append(city)
+    }
+    
+    func removeCityFromRow(row:Int) {
+        cities.removeAtIndex(row)
     }
 }

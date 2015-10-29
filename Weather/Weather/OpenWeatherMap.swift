@@ -28,24 +28,28 @@ class OpenWeatherMap: NSObject {
     }
     
     
-    func weatherForCityName(cityName: String, callback: (NSDictionary?) -> ()) {
+    func weatherForCityName(cityName: String, callback: (Dictionary<String, AnyObject>?) -> ()) {
         call("/weather?q=\(cityName.removeSpaces())", callback: callback)
     }
     
-    func weatherForCoordinate(coordinate: CLLocationCoordinate2D, callback: (NSDictionary?) -> ()) {
+    func weatherForCoordinate(coordinate: CLLocationCoordinate2D, callback: (Dictionary<String, AnyObject>?) -> ()) {
         let coordinateString = "lat=\(coordinate.latitude)&lon=\(coordinate.longitude)"
         call("/weather?\(coordinateString)", callback: callback)
     }
     
-    func findCityForName(cityName: String, callback: (NSDictionary?) -> ()) {
+    func weatherForCityID(cityId: Int, callback: (Dictionary<String, AnyObject>?) -> ()) {
+        call("/weather?id=\(cityId)", callback: callback)
+    }
+    
+    func findCityForName(cityName: String, callback: (Dictionary<String, AnyObject>?) -> ()) {
         call("/find?q=\(cityName.removeSpaces())", callback: callback)
     }
     
-    func findCityForCoordinate(coordinate: CLLocationCoordinate2D, callback: (NSDictionary?) -> ()) {
+    func findCityForCoordinate(coordinate: CLLocationCoordinate2D, callback: (Dictionary<String, AnyObject>?) -> ()) {
         call("/find?lat=\(coordinate.latitude)&lon=\(coordinate.longitude)", callback: callback)
     }
     
-    private func call(operation: String, callback: (NSDictionary?) -> ()) {
+    private func call(operation: String, callback: (Dictionary<String, AnyObject>?) -> ()) {
         let urlPath = baseURL + operation + "&APPID=\(APIKey)&lang=\(language)&units=\(temperatureScale)"
         let url = NSURL(string: urlPath)
         
@@ -58,11 +62,11 @@ class OpenWeatherMap: NSObject {
             (data, response, error) -> Void in
             
             var error: NSError? = error
-            var dictionary: NSDictionary?
+            var dictionary: Dictionary<String, AnyObject>?
             
             if let data = data {
                 do {
-                    dictionary = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? NSDictionary
+                    dictionary = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? Dictionary<String, AnyObject>
                 } catch let e as NSError {
                     error = e
                 }

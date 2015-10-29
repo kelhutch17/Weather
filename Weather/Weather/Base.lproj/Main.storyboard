@@ -4,6 +4,13 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Weather-->
         <scene sceneID="tne-QT-ifu">
@@ -41,7 +48,7 @@
                     <navigationItem key="navigationItem" title="Weather" id="uI4-AH-KUr">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="4He-go-BF4">
                             <connections>
-                                <segue destination="Evl-e0-KNM" kind="presentation" identifier="addNewLocation" id="vu9-Hm-8kT"/>
+                                <segue destination="Evl-e0-KNM" kind="show" identifier="addNewLocation" id="vu9-Hm-8kT"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -62,9 +69,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="lnV-af-PuK">
+                            <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="UBa-MM-Rue" id="gLc-di-abq"/>
+                            </connections>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="userLocationCell" id="Get-Zj-ALO">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="136" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Get-Zj-ALO" id="pcr-5P-jWa">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -84,7 +99,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cityCustomCell" id="yaq-tr-8Rz" customClass="CityTableViewCell" customModule="Weather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="136" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="180" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yaq-tr-8Rz" id="XDb-pR-UYS">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -132,6 +147,14 @@
                                     <outlet property="weatherImageView" destination="g2K-Nk-SVQ" id="E7j-SS-bsD"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="srA-6K-2rR">
+                                <rect key="frame" x="0.0" y="224" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="srA-6K-2rR" id="wQo-xn-OTt">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="UBa-MM-Rue" id="oaV-SA-huS"/>
@@ -145,8 +168,20 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="1gW-cL-caG" id="pof-Lx-dlT"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KOU-PS-GIu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController searchResultsTitle="Results" id="1gW-cL-caG" customClass="SearchResultsViewController" customModule="Weather" customModuleProvider="target">
+                    <connections>
+                        <outlet property="delegate" destination="UBa-MM-Rue" id="pYW-w6-yVv"/>
+                        <outlet property="searchBar" destination="lnV-af-PuK" id="gO8-Gm-bPe"/>
+                        <outlet property="searchContentsController" destination="UBa-MM-Rue" id="NtC-PH-CTv"/>
+                        <outlet property="searchResultsDataSource" destination="UBa-MM-Rue" id="59b-MQ-gFQ"/>
+                        <outlet property="searchResultsDelegate" destination="UBa-MM-Rue" id="PYQ-Ly-EHl"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="2600" y="337"/>
         </scene>

@@ -14,7 +14,11 @@ protocol CityTableViewProtocol {
     func cityTableViewDismissed()
 }
 
-class CityTableViewController: UITableViewController {
+class CityTableViewController: UITableViewController, UISearchResultsUpdating, SearchCitiesProtocol {
+    
+    // outlets
+   // @IBOutlet weak var searchBar: UISearchBar!
+
     
     // Constants
     let numSections = 2
@@ -23,12 +27,15 @@ class CityTableViewController: UITableViewController {
     let model = Model.sharedInstance
     let locationManager = LocationManagerSingleton.sharedInstance
     var weatherAPI:OpenWeatherMap?
-    
     var city:City?
-
     var delegate:CityTableViewProtocol?
-    
     var notificationKey:String?
+    var searchIsActive:Bool = false
+    
+    // Search Vars
+    var cities=[City]()
+    var filteredCities=[City]()
+    var resultSearchController = UISearchController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,8 +48,16 @@ class CityTableViewController: UITableViewController {
         
         // Add notification listener
         notificationKey = model.notificationKey()
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "authorizationStatusChanged:" as Selector, name:notificationKey, object:  nil)
+        
+        resultSearchController = UISearchController(searchResultsController: nil)
+        resultSearchController.searchResultsUpdater = self
+        resultSearchController.dimsBackgroundDuringPresentation = false
+        resultSearchController.searchBar.sizeToFit()
+        
+        self.tableView.tableHeaderView = self.resultSearchController.searchBar
+        
+        self.tableView.reloadData()
         
     }
     
@@ -56,20 +71,30 @@ class CityTableViewController: UITableViewController {
     }
     
     // MARK: - Table view data source
-    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return numSections
+        
+        if (resultSearchController.active)
+        {
+            return 1
+        } else {
+            return numSections
+        }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 1
-        case 1:
-            return model.citiesArrayCount()
-            
-        default:
-            return 1
+        
+        if (self.resultSearchController.active) {
+            return filteredCities.count
+        } else {
+            switch section {
+            case 0:
+                return 1
+            case 1:
+                return model.citiesArrayCount()
+                
+            default:
+                return 1
+            }
         }
     }
     
@@ -79,11 +104,18 @@ class CityTableViewController: UITableViewController {
         let section = indexPath.section
         let row = indexPath.row
         
+        if (self.resultSearchController.active)
+        {
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell?
+
+            cell!.textLabel?.text = filteredCities[row].cityNameValue()
+            
+            return cell!
+        }
+        
         // User location
         if section == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("userLocationCell", forIndexPath: indexPath)
-            //            cell.textLabel?.text = "Current Location"
-            return cell
+            return tableView.dequeueReusableCellWithIdentifier("userLocationCell", forIndexPath: indexPath)
         }
             // Other saved cities
         else {
@@ -95,7 +127,7 @@ class CityTableViewController: UITableViewController {
             cell.temperatureLabel.text = city.temperatureValue()!.description
             
             if let imageName = city.weatherImageNameValue() {
-                cell.weatherImageView.image = UIImage(named: imageName)
+                cell.weatherImageView.image = UIImage(named: "\(imageName).png")
             }
             
             return cell
@@ -105,6 +137,18 @@ class CityTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        // Search Table View
+        if (self.resultSearchController.active)
+        {
+            // return the city for the selected cell
+            if let delegate = delegate {
+                delegate.newCitySelected(filteredCities[indexPath.row])
+            }
+            else {
+                NSLog("Delegate not set")
+            }
+        }
         
         // check type of cell before casting it
         let cell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
@@ -131,12 +175,7 @@ class CityTableViewController: UITableViewController {
                     return
                 }
                 else {
-                    if let delegate = delegate {
-                        newCityForUserLocation()
-                    }
-                    else {
-                        NSLog("Delegate not set")
-                    }
+                    newCityForUserLocation()
                 }
             }
             else {
@@ -152,6 +191,17 @@ class CityTableViewController: UITableViewController {
     
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        
+        if (self.resultSearchController.active)
+        {
+            return false
+        }
+        
+        // Don't let the user edit the "Current Location" cell
+        if indexPath.section == 0 {
+            return false
+        }
+        
         return true
     }
     
@@ -159,10 +209,9 @@ class CityTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             // Delete the row from the data source
+            model.removeCityFromRow(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-            
+            //tableView.reloadData()
         }
     }
     
@@ -195,23 +244,43 @@ class CityTableViewController: UITableViewController {
             if let weatherAPI = weatherAPI {
                 weatherAPI.weatherForCoordinate(currentLocation.coordinate, callback: { result in
                     if let dictionary = result {
-                        let name = dictionary["name"] as! String
                         
-                        let weather = dictionary["main"] as? Dictionary<String, AnyObject>
-                        if let weatherDict = weather {
-                            let temp = weatherDict["temp"]
-                            
-                            self.delegate!.newCitySelected(City(cityName: name, temperature: temp as! Double, temperatureScale: Model.TemperatureScale.Fahrenheit, weatherImageName: ""))
+                        // Create a new city with SearchCities helper method
+                        let searcher = SearchCities()
+                        let newCity = searcher.newCityFromCityDictionary(dictionary)
+                        
+                        // Dismiss and pass the city back
+                        if let delegate = self.delegate {
+                            delegate.newCitySelected(newCity)
+                        } else {
+                            NSLog("Delegate not set!")
                         }
-                        
                     }
                     else {
-                        print("error")
+                        print("Failed to complete API call")
                     }
                 })
             }
         }
     }
+    
+    // MARK: UISearchResultsUpdating
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        filteredCities.removeAll(keepCapacity: false)
+        
+        let searchPredicate:String = searchController.searchBar.text!
+        let searcher = SearchCities()
+        
+        searcher.findCitiesWithName(searchPredicate)
+    }
+    
+    // MARK: SearchCitiesProtocol
+    func matchingCitiesFound(matchingCities: [City]) {
+        filteredCities = matchingCities
+        self.tableView.reloadData()
+    }
+    
+    // Actions
     
     @IBAction func cancelButtonPressed(sender: UIBarButtonItem) {
         

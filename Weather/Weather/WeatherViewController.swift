@@ -49,36 +49,39 @@ class WeatherViewController: UIViewController, CityTableViewProtocol {
     
     func setupDefaultCity() {
         
-        // create new city object and add to array at index 0
-        city = City(cityName: model.defaultCityNameString(), temperatureScale: Model.TemperatureScale.Fahrenheit)
-        
-        cityNameLabel.text = city?.cityNameValue()
-        
         // Make API calls for default city (Mountain View)
         let weatherAPI = OpenWeatherMap(language: "en", temperatureScale: Model.TemperatureScale.Fahrenheit.rawValue, APIKey: model.apiKeyValue())
         
-        weatherAPI.weatherForCityName(city!.cityNameValue(), callback: { result in
+        weatherAPI.weatherForCityID(model.defaultCityIDValue(), callback: { result in
             if let dictionary = result {
-                let weather = dictionary["main"] as? Dictionary<String, AnyObject>
                 
-                if let weatherDict = weather {
-                    let temp = weatherDict["temp"]
-                    self.city!.updateTemperature(temp as! Double)
-                    self.temperatureLabel.text = self.city?.temperatureValue()?.description
+                // Create a new city with SearchCities helper method
+                let searcher = SearchCities()
+                self.city = searcher.newCityFromCityDictionary(dictionary)
+                
+                // Add city to model so we can populate the table view with default city in it
+                if let city = self.city {
+                    self.model.addNewCity(city)
                 }
                 
+                // Set labels for new city here
+                self.displayNewCity()
             }
             else {
-                print("error")
+                print("Error in reaching API")
             }
         })
     }
 
     
     func displayNewCity() {
-        // update labels
-        cityNameLabel.text = city?.cityNameValue()
-        self.temperatureLabel.text = self.city?.temperatureValue()?.description
+        // update labels for new city
+        if let city = city {
+            cityNameLabel.text = city.cityNameValue()
+            temperatureLabel.text = city.temperatureValue()?.description
+        } else {
+            cityNameLabel.text = "Error in loading city. Please try again later."
+        }
     }
     
     

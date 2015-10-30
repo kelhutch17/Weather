@@ -23,6 +23,7 @@ class WeatherViewController: UIViewController, CityTableViewProtocol {
     @IBOutlet weak var loadingOverlay: UIView!
     @IBOutlet weak var lowTemperatureLabel: UILabel!
     @IBOutlet weak var highTemperatureLabel: UILabel!
+    @IBOutlet weak var weatherDescriptionLabel: UILabel!
     
     
     override func viewDidLoad() {
@@ -90,6 +91,9 @@ class WeatherViewController: UIViewController, CityTableViewProtocol {
         if let city = city {
             cityNameLabel.text = city.cityNameValue()
             temperatureLabel.text = city.temperatureValue()?.description
+            highTemperatureLabel.text = city.highTempValue()?.description
+            highTemperatureLabel.text = city.lowTempValue()?.description
+            weatherDescriptionLabel.text = city.weatherDescriptionValue()
         } else {
             cityNameLabel.text = "Error in loading city. Please try again later."
         }

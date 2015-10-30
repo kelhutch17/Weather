@@ -15,10 +15,10 @@ class City: NSObject {
     private var tempMin: Double?
     private var tempMax: Double?
     private let temperatureScale: Model.TemperatureScale
-    private var weatherMain: String?
-    private var weatherDescription: String?
+    private var weatherMain: String = ""
+    private var weatherDescription: String = ""
     private var weatherImageName: String?
-    private var id:String?
+    private var id: String?
     private var coordinate:CLLocationCoordinate2D?
     
     init(cityName:String, temperature:Double, tempMin:Double, tempMax:Double, temperatureScale:Model.TemperatureScale, weatherImageName:String, weatherMain:String, weatherDescription:String, cityID:String, coordinate:CLLocationCoordinate2D) {
@@ -62,6 +62,22 @@ class City: NSObject {
     
     func temperatureScaleValue() -> Model.TemperatureScale {
         return temperatureScale
+    }
+    
+    func lowTempValue() -> Double? {
+        return tempMin
+    }
+    
+    func highTempValue() -> Double? {
+        return tempMax
+    }
+    
+    func weatherDescriptionValue() -> String {
+        return weatherDescription
+    }
+    
+    func weatherMainValue() -> String {
+        return weatherMain
     }
     
     func weatherImageNameValue() -> String? {

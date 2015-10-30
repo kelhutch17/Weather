@@ -23,94 +23,115 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clouds.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="nRI-lG-rRy">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clouds.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="nRI-lG-rRy">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vrD-ce-uEf">
-                                <rect key="frame" x="226" y="225" width="148" height="150"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vrD-ce-uEf" userLabel="Weather Info View">
+                                <rect key="frame" x="0.0" y="175" width="600" height="250"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mountain View" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Da-w4-oye">
-                                        <rect key="frame" x="0.0" y="0.0" width="148" height="32"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mountain View" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Da-w4-oye">
+                                        <rect key="frame" x="188" y="0.0" width="224" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="32" id="Fn0-OT-UK2"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="35"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zwk-tC-aNO" userLabel="Center Spacer">
+                                        <rect key="frame" x="300" y="125" width="0.0" height="0.0"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" id="ULS-1x-fMd"/>
+                                            <constraint firstAttribute="width" id="dZ2-cu-SFI"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Right Now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8NQ-77-QvN">
+                                        <rect key="frame" x="188" y="48" width="108" height="36"/>
                                         <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="23"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Right Now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8NQ-77-QvN">
-                                        <rect key="frame" x="0.0" y="40" width="77" height="27"/>
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="55" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nDl-54-IIP">
-                                        <rect key="frame" x="85" y="41" width="16" height="25"/>
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="16"/>
+                                        <rect key="frame" x="320" y="49" width="22" height="34"/>
+                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="22"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="°" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pol-Va-nYq">
-                                        <rect key="frame" x="105" y="41" width="15" height="15"/>
+                                        <rect key="frame" x="346" y="49" width="15" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="15" id="8GT-6L-NZT"/>
                                             <constraint firstAttribute="width" constant="15" id="XWi-oD-ZLs"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
+                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="21"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Low" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4MR-lZ-Uyo">
-                                        <rect key="frame" x="45" y="75" width="32" height="27"/>
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
+                                        <rect key="frame" x="253" y="92" width="43" height="36"/>
+                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="23"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="44" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JDL-Pg-u1Q">
-                                        <rect key="frame" x="85" y="76" width="22" height="25"/>
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="16"/>
+                                        <rect key="frame" x="320" y="93" width="29" height="34"/>
+                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="22"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="°" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9bU-ej-9dr">
-                                        <rect key="frame" x="111" y="76" width="15" height="15"/>
+                                        <rect key="frame" x="353" y="93" width="15" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="15" id="E1b-bm-IOu"/>
                                             <constraint firstAttribute="height" constant="15" id="cgL-Oa-c3s"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
+                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="21"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="55" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ku1-k4-uq2">
-                                        <rect key="frame" x="85" y="111" width="16" height="25"/>
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="16"/>
+                                        <rect key="frame" x="320" y="137" width="22" height="34"/>
+                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="22"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="°" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Go6-4U-C1i">
-                                        <rect key="frame" x="105" y="111" width="15" height="15"/>
+                                        <rect key="frame" x="346" y="137" width="15" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="15" id="KSa-75-G0I"/>
                                             <constraint firstAttribute="width" constant="15" id="oEh-sY-dWD"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
+                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="21"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="High" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7sT-7y-vGS">
-                                        <rect key="frame" x="41" y="110" width="36" height="27"/>
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
+                                        <rect key="frame" x="248" y="136" width="48" height="36"/>
+                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="23"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cloudy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3VZ-dd-kHn">
+                                        <rect key="frame" x="262" y="188" width="76" height="36"/>
+                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="23"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZAL-8r-HQK" userLabel="Underline">
+                                        <rect key="frame" x="188" y="32" width="224" height="2"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="2" id="6tD-U4-4Wx"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="0.35999999999999999" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.52988795230263153" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="JDL-Pg-u1Q" firstAttribute="leading" secondItem="4MR-lZ-Uyo" secondAttribute="trailing" constant="8" id="0Z3-R4-Pwp"/>
                                     <constraint firstItem="Pol-Va-nYq" firstAttribute="leading" secondItem="nDl-54-IIP" secondAttribute="trailing" constant="4" id="3Dx-ce-t05"/>
                                     <constraint firstItem="8Da-w4-oye" firstAttribute="top" secondItem="vrD-ce-uEf" secondAttribute="top" id="3E4-Hs-0QG"/>
                                     <constraint firstItem="ku1-k4-uq2" firstAttribute="centerY" secondItem="7sT-7y-vGS" secondAttribute="centerY" id="3lM-3q-Jh8"/>
+                                    <constraint firstItem="3VZ-dd-kHn" firstAttribute="top" secondItem="7sT-7y-vGS" secondAttribute="bottom" constant="16" id="5D0-zL-FhC"/>
                                     <constraint firstItem="Pol-Va-nYq" firstAttribute="top" secondItem="nDl-54-IIP" secondAttribute="top" id="5hY-9r-cfH"/>
                                     <constraint firstItem="8NQ-77-QvN" firstAttribute="leading" secondItem="8Da-w4-oye" secondAttribute="leading" id="5mt-JZ-1Dm"/>
                                     <constraint firstItem="9bU-ej-9dr" firstAttribute="leading" secondItem="JDL-Pg-u1Q" secondAttribute="trailing" constant="4" id="6Io-rf-Mpm"/>
@@ -119,19 +140,30 @@
                                     <constraint firstItem="7sT-7y-vGS" firstAttribute="trailing" secondItem="8NQ-77-QvN" secondAttribute="trailing" id="MAb-vH-Mce"/>
                                     <constraint firstItem="7sT-7y-vGS" firstAttribute="top" secondItem="4MR-lZ-Uyo" secondAttribute="bottom" constant="8" id="MdD-RU-IQE"/>
                                     <constraint firstItem="8Da-w4-oye" firstAttribute="centerX" secondItem="vrD-ce-uEf" secondAttribute="centerX" id="RFb-OF-Ndg"/>
-                                    <constraint firstAttribute="width" secondItem="8Da-w4-oye" secondAttribute="width" id="TCJ-nW-g7a"/>
-                                    <constraint firstAttribute="height" constant="150" id="U2F-eF-PxS"/>
-                                    <constraint firstItem="8NQ-77-QvN" firstAttribute="top" secondItem="8Da-w4-oye" secondAttribute="bottom" constant="8" id="Wwt-Qa-0Y9"/>
+                                    <constraint firstItem="ZAL-8r-HQK" firstAttribute="width" secondItem="8Da-w4-oye" secondAttribute="width" id="T1L-Cr-9wC"/>
+                                    <constraint firstAttribute="height" constant="250" id="U2F-eF-PxS"/>
+                                    <constraint firstItem="ZAL-8r-HQK" firstAttribute="top" secondItem="8Da-w4-oye" secondAttribute="bottom" id="Wh0-A1-7fG"/>
+                                    <constraint firstItem="8NQ-77-QvN" firstAttribute="top" secondItem="8Da-w4-oye" secondAttribute="bottom" constant="16" id="Wwt-Qa-0Y9"/>
                                     <constraint firstItem="JDL-Pg-u1Q" firstAttribute="centerY" secondItem="4MR-lZ-Uyo" secondAttribute="centerY" id="XcE-sP-oAa"/>
                                     <constraint firstItem="4MR-lZ-Uyo" firstAttribute="top" secondItem="8NQ-77-QvN" secondAttribute="bottom" constant="8" id="YkQ-lN-2pB"/>
+                                    <constraint firstItem="zwk-tC-aNO" firstAttribute="centerY" secondItem="vrD-ce-uEf" secondAttribute="centerY" id="acv-KL-vyf"/>
                                     <constraint firstItem="4MR-lZ-Uyo" firstAttribute="trailing" secondItem="8NQ-77-QvN" secondAttribute="trailing" id="e9N-RC-eph"/>
-                                    <constraint firstItem="nDl-54-IIP" firstAttribute="leading" secondItem="8NQ-77-QvN" secondAttribute="trailing" constant="8" id="gIK-zg-L7j"/>
                                     <constraint firstItem="JDL-Pg-u1Q" firstAttribute="leading" secondItem="nDl-54-IIP" secondAttribute="leading" id="gr6-8k-30i"/>
                                     <constraint firstItem="Go6-4U-C1i" firstAttribute="leading" secondItem="ku1-k4-uq2" secondAttribute="trailing" constant="4" id="hKh-Ip-wPN"/>
                                     <constraint firstItem="ku1-k4-uq2" firstAttribute="leading" secondItem="JDL-Pg-u1Q" secondAttribute="leading" id="hRg-gi-8aQ"/>
+                                    <constraint firstItem="ZAL-8r-HQK" firstAttribute="centerX" secondItem="8Da-w4-oye" secondAttribute="centerX" id="rli-ih-I9k"/>
+                                    <constraint firstItem="zwk-tC-aNO" firstAttribute="leading" secondItem="8NQ-77-QvN" secondAttribute="trailing" constant="4" id="sDh-go-wx9"/>
                                     <constraint firstItem="ku1-k4-uq2" firstAttribute="leading" secondItem="7sT-7y-vGS" secondAttribute="trailing" constant="8" id="sg8-OR-SQL"/>
                                     <constraint firstItem="9bU-ej-9dr" firstAttribute="top" secondItem="JDL-Pg-u1Q" secondAttribute="top" id="uC1-my-8DT"/>
+                                    <constraint firstItem="3VZ-dd-kHn" firstAttribute="centerX" secondItem="vrD-ce-uEf" secondAttribute="centerX" id="x3e-PQ-wKa"/>
+                                    <constraint firstItem="nDl-54-IIP" firstAttribute="leading" secondItem="zwk-tC-aNO" secondAttribute="trailing" constant="20" id="x8C-2P-DCY"/>
+                                    <constraint firstItem="zwk-tC-aNO" firstAttribute="centerX" secondItem="8Da-w4-oye" secondAttribute="centerX" id="xv3-sT-wKp"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="sg8-OR-SQL"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qud-Gy-lko">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -155,6 +187,7 @@
                             <constraint firstItem="nRI-lG-rRy" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="4Qw-Xi-lsv"/>
                             <constraint firstItem="nRI-lG-rRy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5q1-7v-KZn"/>
                             <constraint firstItem="qud-Gy-lko" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="6Xl-Z6-m67"/>
+                            <constraint firstItem="vrD-ce-uEf" firstAttribute="width" secondItem="qud-Gy-lko" secondAttribute="width" id="Kye-mc-JOS"/>
                             <constraint firstItem="vrD-ce-uEf" firstAttribute="centerY" secondItem="nRI-lG-rRy" secondAttribute="centerY" id="PhH-9d-8nj"/>
                             <constraint firstItem="vrD-ce-uEf" firstAttribute="centerX" secondItem="nRI-lG-rRy" secondAttribute="centerX" id="ZM7-0s-wrd"/>
                             <constraint firstItem="qud-Gy-lko" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="kXa-Fm-COx"/>
@@ -177,6 +210,7 @@
                         <outlet property="loadingOverlay" destination="qud-Gy-lko" id="20p-jw-57A"/>
                         <outlet property="lowTemperatureLabel" destination="JDL-Pg-u1Q" id="wFJ-fM-XZ1"/>
                         <outlet property="temperatureLabel" destination="nDl-54-IIP" id="qhG-0P-yTB"/>
+                        <outlet property="weatherDescriptionLabel" destination="3VZ-dd-kHn" id="Eoc-ke-3Ca"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

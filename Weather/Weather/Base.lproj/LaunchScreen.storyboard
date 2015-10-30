@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8150" systemVersion="15A204g" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -15,13 +15,43 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clouds.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="JR3-qd-6Rr">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kelly Hutchison © 2015" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V9Q-YT-bx1">
+                                <rect key="frame" x="192" y="551" width="217" height="33"/>
+                                <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="21"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yXW-1E-FuK">
+                                <rect key="frame" x="199" y="258" width="202" height="85"/>
+                                <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="55"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="JR3-qd-6Rr" firstAttribute="bottom" secondItem="V9Q-YT-bx1" secondAttribute="bottom" constant="16" id="D5b-gS-bwf"/>
+                            <constraint firstItem="yXW-1E-FuK" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Kc3-Ix-XfM"/>
+                            <constraint firstItem="yXW-1E-FuK" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="LrL-4I-1rr"/>
+                            <constraint firstItem="V9Q-YT-bx1" firstAttribute="centerX" secondItem="JR3-qd-6Rr" secondAttribute="centerX" id="T9c-CV-f5n"/>
+                            <constraint firstItem="JR3-qd-6Rr" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="aMo-l8-hdk"/>
+                            <constraint firstItem="JR3-qd-6Rr" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" id="hPq-HT-tzh"/>
+                            <constraint firstItem="JR3-qd-6Rr" firstAttribute="height" secondItem="Ze5-6b-2t3" secondAttribute="height" id="l5k-KU-FQc"/>
+                            <constraint firstItem="JR3-qd-6Rr" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="qXb-Ml-1tO"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="84" y="384"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="clouds.jpg" width="480" height="800"/>
+    </resources>
 </document>

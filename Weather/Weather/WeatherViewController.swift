@@ -17,9 +17,13 @@ class WeatherViewController: UIViewController, CityTableViewProtocol {
     // locals 
     var city:City?
     
+    // Outlets
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var loadingOverlay: UIView!
+    @IBOutlet weak var lowTemperatureLabel: UILabel!
+    @IBOutlet weak var highTemperatureLabel: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

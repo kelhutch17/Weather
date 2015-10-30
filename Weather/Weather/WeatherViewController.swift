@@ -34,15 +34,12 @@ class WeatherViewController: UIViewController, CityTableViewProtocol {
         
         // Setup the model to get info about the default city
         setupDefaultCity()
-        
-        // If API calls succeeded and we have the info about the default city, show it
-        
-        
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
+        // Request location permission from user
         if locationManager.locationServicesEnabled()  {
             if  locationManager.authorizationStatus() == .NotDetermined {
                 locationManager.locationManager.requestWhenInUseAuthorization()
@@ -56,11 +53,13 @@ class WeatherViewController: UIViewController, CityTableViewProtocol {
     }
     
     
+    // Function to set a default city when the app is first launched
     func setupDefaultCity() {
         
         // Make API calls for default city (Mountain View)
         let weatherAPI = OpenWeatherMap(language: "en", temperatureScale: Model.TemperatureScale.Fahrenheit.rawValue, APIKey: model.apiKeyValue())
         
+        // Get the weather info for default city's ID
         weatherAPI.weatherForCityID(model.defaultCityIDValue(), callback: { result in
             if let dictionary = result {
                 
@@ -85,7 +84,7 @@ class WeatherViewController: UIViewController, CityTableViewProtocol {
         })
     }
 
-    
+    // Populate labels with new city's weather info
     func displayNewCity() {
         // update labels for new city
         if let city = city {
@@ -101,6 +100,8 @@ class WeatherViewController: UIViewController, CityTableViewProtocol {
     
     
     // MARK: CityTableViewProtocol
+    
+    // Function called when a new city was selected from the table view of cities
     func newCitySelected(selectedCity:City) {
         
         // show the overlay while we load
@@ -117,6 +118,7 @@ class WeatherViewController: UIViewController, CityTableViewProtocol {
         dismissViewControllerAnimated(true, completion: completionBlock)
     }
     
+    // Function called when cancel button on table view is pressed
     func cityTableViewDismissed(resetToDefaultCity: Bool) {
         // If the previously shown city was deleted from the table view, reset to default city
         if resetToDefaultCity {

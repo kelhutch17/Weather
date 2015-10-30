@@ -9,6 +9,8 @@
 import Foundation
 
 extension String {
+    
+    // Replaces Every White Space with '+'
     func removeSpaces() -> String {
         return String(self.characters.map {
                 $0 == " " ? "+" : $0

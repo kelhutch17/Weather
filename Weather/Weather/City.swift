@@ -21,7 +21,9 @@ class City: NSObject {
     private var id: String?
     private var coordinate:CLLocationCoordinate2D?
     
-    init(cityName:String, temperature:Double, tempMin:Double, tempMax:Double, temperatureScale:Model.TemperatureScale, weatherImageName:String, weatherMain:String, weatherDescription:String, cityID:String, coordinate:CLLocationCoordinate2D) {
+    init(cityName:String, temperature:Double, tempMin:Double, tempMax:Double, temperatureScale:Model.TemperatureScale,
+        weatherImageName:String, weatherMain:String, weatherDescription:String, cityID:String, coordinate:CLLocationCoordinate2D) {
+        
         self.cityName = cityName
         self.temperature = temperature
         self.tempMin = tempMin
@@ -44,7 +46,7 @@ class City: NSObject {
         id = newCode
     }
     
-    func cityCodeValue() -> String{
+    func cityCodeValue() -> String {
         if let _ = id {
             return id!
         } else {

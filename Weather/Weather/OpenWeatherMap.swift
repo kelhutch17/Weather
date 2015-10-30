@@ -27,7 +27,7 @@ class OpenWeatherMap: NSObject {
         self.temperatureScale = temperatureScale
     }
     
-    
+    // API Call Functions
     func weatherForCityName(cityName: String, callback: (Dictionary<String, AnyObject>?) -> ()) {
         call("/weather?q=\(cityName.removeSpaces())", callback: callback)
     }
@@ -49,6 +49,7 @@ class OpenWeatherMap: NSObject {
         call("/find?lat=\(coordinate.latitude)&lon=\(coordinate.longitude)", callback: callback)
     }
     
+    // Main Call Function - opens the URL Session and gets the data back
     private func call(operation: String, callback: (Dictionary<String, AnyObject>?) -> ()) {
         let urlPath = baseURL + operation + "&APPID=\(APIKey)&lang=\(language)&units=\(temperatureScale)"
         let url = NSURL(string: urlPath)
@@ -64,6 +65,7 @@ class OpenWeatherMap: NSObject {
             var error: NSError? = error
             var dictionary: Dictionary<String, AnyObject>?
             
+            // Check for errors 
             if let data = data {
                 do {
                     dictionary = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? Dictionary<String, AnyObject>

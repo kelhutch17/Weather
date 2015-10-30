@@ -28,6 +28,7 @@ class Model
     private init () {
     }
     
+    // Setter and Getters
     func notificationKey() -> String {
         return authorizationStatusNotificationKey
     }

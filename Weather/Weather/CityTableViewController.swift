@@ -15,21 +15,18 @@ protocol CityTableViewProtocol {
 }
 
 class CityTableViewController: UITableViewController, UISearchResultsUpdating, SearchCitiesProtocol {
-    
-    // outlets
-   // @IBOutlet weak var searchBar: UISearchBar!
-
-    
     // Constants
     let numSections = 2
     
-    // locals
+    // Shared Singletons
     let model = Model.sharedInstance
     let locationManager = LocationManagerSingleton.sharedInstance
+    
+    // Locals
     var weatherAPI:OpenWeatherMap?
+    var searcher:SearchCities?
     var city:City?
     var delegate:CityTableViewProtocol?
-    var notificationKey:String?
     var searchIsActive:Bool = false
     var currentlyShownCity:City?
     var shownCityDeleted:Bool = false
@@ -45,13 +42,7 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        // initialize API caller
-        weatherAPI = OpenWeatherMap(language: "en", temperatureScale: Model.TemperatureScale.Fahrenheit.rawValue, APIKey: model.apiKeyValue())
-        
-        // Add notification listener
-        notificationKey = model.notificationKey()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "authorizationStatusChanged:" as Selector, name:notificationKey, object:  nil)
-        
+        // Set up the search view controller
         resultSearchController = UISearchController(searchResultsController: nil)
         resultSearchController.searchResultsUpdater = self
         resultSearchController.dimsBackgroundDuringPresentation = false
@@ -59,11 +50,14 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
         
         // enable the search bar
         resultSearchController.searchBar.userInteractionEnabled = true
-        
         self.tableView.tableHeaderView = self.resultSearchController.searchBar
         
+        // Initialize the search helper class variables
+        searcher = SearchCities()
+        weatherAPI = OpenWeatherMap(language: "en", temperatureScale: Model.TemperatureScale.Fahrenheit.rawValue, APIKey: model.apiKeyValue())
+
+        // reload the table view
         self.tableView.reloadData()
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -71,15 +65,11 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
         // Dispose of any resources that can be recreated.
     }
     
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: notificationKey, object: nil)
-    }
-    
     // MARK: - Table view data source
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        if (resultSearchController.active)
-        {
+        // If this is the search results table view
+        if (resultSearchController.active) {
             return 1
         } else {
             return numSections
@@ -103,12 +93,12 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
         }
     }
     
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let section = indexPath.section
         let row = indexPath.row
         
+        // If this is the search results table view add the search results
         if (self.resultSearchController.active)
         {
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell?
@@ -124,7 +114,7 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
             cell.selectionStyle = .None
             return cell
         }
-            // Other saved cities
+        // Other saved cities
         else {
             let cell = tableView.dequeueReusableCellWithIdentifier("cityCustomCell", forIndexPath: indexPath) as! CityTableViewCell
             
@@ -133,6 +123,7 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
             cell.cityNameLabel.text = city.cityNameValue()
             cell.temperatureLabel.text = city.temperatureValue()!.description
             
+            // If there is an image for this weather condition, add it
             if let imageName = city.weatherImageNameValue() {
                 cell.weatherImageView.image = UIImage(named: "\(imageName).png")
             }
@@ -142,7 +133,6 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
         // Search Table View
         if (self.resultSearchController.active)
         {
@@ -167,12 +157,14 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
             // enable the search bar now that we have successfully returned from the search
             resultSearchController.searchBar.userInteractionEnabled = true
         }
+        // Cities (Main) Table View
         else {
             // check type of cell before casting it
             let cell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
             let cellType:String = cell.reuseIdentifier!
             
             switch cellType {
+            // City cell
             case "cityCustomCell":
                 let cityCell = cell as! CityTableViewCell
                 
@@ -185,13 +177,16 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
                 }
                 
                 break
-                
+            
+            // Current Location cell
             case "userLocationCell":
                 if locationManager.locationServicesEnabled() {
+                    // If location is denied, remind the user of this
                     if locationManager.authorizationStatus() == .Denied {
                         showErrorAlert("Location Services Turned Off", message: "Change the location settings for this app in your phone's privacy settings to allow us to show the weather in your current location")
                         return
                     }
+                    // Show the current location's weather via delegate method
                     else {
                         newCityForUserLocation()
                     }
@@ -199,7 +194,6 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
                 else {
                     NSLog("Location services not enabled")
                 }
-                
                 break
                 
             default:
@@ -211,16 +205,18 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         
+        // Do not allow the search results table to be edited
         if (self.resultSearchController.active)
         {
             return false
         }
         
-        // Don't let the user edit the "Current Location" cell
+        // Do not let the user edit the "Current Location" cell
         if indexPath.section == 0 {
             return false
         }
         
+        // Allow the regular cities table view cells to be edited
         return true
     }
     
@@ -248,25 +244,14 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
                     shownCityDeleted = true
                 }
             }
+            
+            // Delete the city from the array then the table view
             model.removeCityFromRow(row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             
             // enable the search bar when we are finished editing
             resultSearchController.searchBar.userInteractionEnabled = true
-        }
-    }
-    
-    // MARK: NSNotification Handlers
-    func authorizationStatusChanged(notification:NSNotification) {
-        if notification.name == notificationKey {
-            let status = notification.object as! CLAuthorizationStatus
-            
-            if status == CLAuthorizationStatus.AuthorizedWhenInUse {
-                
-            }
-            else {
-                
-            }
+            resultSearchController.searchBar.placeholder = "Search by City Name or Postal Code"
         }
     }
     
@@ -278,8 +263,8 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
         presentViewController(alertViewController, animated: true, completion: nil)
     }
     
+    // Create a new City object for the current user location
     func newCityForUserLocation() {
-        
         if let currentLocation = locationManager.currentLocation {
             // make API calls here
             if let weatherAPI = weatherAPI {
@@ -287,14 +272,17 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
                     if let dictionary = result {
                         
                         // Create a new city with SearchCities helper method
-                        let searcher = SearchCities()
-                        let newCity = searcher.newCityFromCityDictionary(dictionary)
-                        
-                        // Dismiss and pass the city back
-                        if let delegate = self.delegate {
-                            delegate.newCitySelected(newCity)
+                        if let searcher = self.searcher {
+                            let newCity = searcher.newCityFromCityDictionary(dictionary)
+                            
+                            // Dismiss and pass the city back
+                            if let delegate = self.delegate {
+                                delegate.newCitySelected(newCity)
+                            } else {
+                                NSLog("Delegate not set!")
+                            }
                         } else {
-                            NSLog("Delegate not set!")
+                            NSLog("SearchCities object not initialized")
                         }
                     }
                     else {
@@ -312,9 +300,14 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
         filteredCities.removeAll(keepCapacity: false)
         
         let searchPredicate:String = searchController.searchBar.text!
-        let searcher = SearchCities()
-        searcher.delegate = self
-        searcher.findCitiesWithName(searchPredicate)
+        
+        // Create a new city with SearchCities helper method
+        if let searcher = searcher {
+            searcher.delegate = self
+            searcher.findCitiesWithName(searchPredicate)
+        } else {
+            NSLog("SearchCities object not initialized")
+        }
     }
     
     // MARK: SearchCitiesProtocol

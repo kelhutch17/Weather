@@ -26,14 +26,19 @@ class SearchCities {
     
     // Filter all cities based on input string
     func findCitiesWithName(name:String) {
+        
         // Make API Call with city substring
         if let weatherAPI = weatherAPI {
             weatherAPI.findCityForName(name, callback: { result in
                 if let dictionary = result {
-                    // check return value
+                    
+                    // check return value - if not 200 return
                     if (dictionary["cod"] as! String) != "200" {
+                        NSLog("Error with HTTP Response code -- not 200 OK!")
                         return
                     }
+                    
+                    // Store the returned matching cities JSON data
                     let returnedCities = dictionary["list"] as! Array<Dictionary<String, AnyObject>>
                     
                     if let delegate = self.delegate {
@@ -50,6 +55,7 @@ class SearchCities {
         
     }
     
+    // Get an array of City objects for the matching city JSON data
     private func findMatchingCities(allCities:Array<Dictionary<String, AnyObject>>) -> [City] {
         var matchingCities = [City]()
         for city:Dictionary<String, AnyObject> in allCities {
@@ -60,6 +66,7 @@ class SearchCities {
     
     // Creates a new City object from a JSON Dictionary 
     func newCityFromCityDictionary(city:Dictionary<String, AnyObject>) -> City {
+        
         // EXAMPLE JSON DICTIONARY from API call
         // {"id":4525353,"name":"Springfield","coord":{"lon":-83.808823,"lat":39.924229},"main":{"temp":47.12,"temp_min":47.12,"temp_max":47.12,"pressure":990.13,"sea_level":1024.35,"grnd_level":990.13,"humidity":79},"dt":1446149192,"wind":{"speed":15.79,"deg":270.003},"sys":{"country":"US"},"clouds":{"all":0},"weather":[{"id":800,"main":"Clear","description":"Sky is Clear","icon":"01d"}]}
         

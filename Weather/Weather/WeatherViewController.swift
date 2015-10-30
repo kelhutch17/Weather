@@ -19,9 +19,13 @@ class WeatherViewController: UIViewController, CityTableViewProtocol {
     
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
+    @IBOutlet weak var loadingOverlay: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Show loading overlay
+        self.loadingOverlay.hidden = false
         
         // Setup the model to get info about the default city
         setupDefaultCity()
@@ -66,6 +70,9 @@ class WeatherViewController: UIViewController, CityTableViewProtocol {
                 
                 // Set labels for new city here
                 self.displayNewCity()
+                
+                // Show loading overlay
+                self.loadingOverlay.hidden = true
             }
             else {
                 print("Error in reaching API")
@@ -88,17 +95,25 @@ class WeatherViewController: UIViewController, CityTableViewProtocol {
     // MARK: CityTableViewProtocol
     func newCitySelected(selectedCity:City) {
         
+        // show the overlay while we load
+        loadingOverlay.hidden = false
+        
         // Store the selected city and create completion block to show this city
         city = selectedCity
         let completionBlock = {
             self.displayNewCity()
+            self.loadingOverlay.hidden = true
         }
         
         // dismiss the presented view controller
         dismissViewControllerAnimated(true, completion: completionBlock)
     }
     
-    func cityTableViewDismissed() {
+    func cityTableViewDismissed(resetToDefaultCity: Bool) {
+        // If the previously shown city was deleted from the table view, reset to default city
+        if resetToDefaultCity {
+            setupDefaultCity()
+        }
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -108,6 +123,7 @@ class WeatherViewController: UIViewController, CityTableViewProtocol {
             let navigationController = segue.destinationViewController as! UINavigationController
             let destinationViewController = navigationController.topViewController as! CityTableViewController
             destinationViewController.delegate = self
+            destinationViewController.currentlyShownCity = city
             break
         default:
             NSLog("Unhandled segue")

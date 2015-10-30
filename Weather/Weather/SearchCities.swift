@@ -24,11 +24,16 @@ class SearchCities {
         weatherAPI = OpenWeatherMap(language: "en", temperatureScale: Model.TemperatureScale.Fahrenheit.rawValue, APIKey: model.apiKeyValue())
     }
     
+    // Filter all cities based on input string
     func findCitiesWithName(name:String) {
         // Make API Call with city substring
         if let weatherAPI = weatherAPI {
             weatherAPI.findCityForName(name, callback: { result in
-                if let dictionary = result {                    
+                if let dictionary = result {
+                    // check return value
+                    if (dictionary["cod"] as! String) != "200" {
+                        return
+                    }
                     let returnedCities = dictionary["list"] as! Array<Dictionary<String, AnyObject>>
                     
                     if let delegate = self.delegate {

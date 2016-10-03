@@ -20,16 +20,15 @@ class LocationManagerSingleton: NSObject, CLLocationManagerDelegate {
     
     override init() {
         super.init()
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        self.locationManager.delegate = self
         
-        notificationKey = model.notificationKey()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: nil, name: notificationKey, object: nil)
+        if CLLocationManager.locationServicesEnabled() {
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            self.locationManager.delegate = self
+        }
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     func startUpdatingLocation() {
@@ -47,27 +46,19 @@ class LocationManagerSingleton: NSObject, CLLocationManagerDelegate {
     func authorizationStatus() -> CLAuthorizationStatus {
         return CLLocationManager.authorizationStatus()
     }
-    
-    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
-        self.currentLocation = newLocation
-    }
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.currentLocation = locations.last
     }
     
     // If location authorization changes, handle it here
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         
         // Conform to user's preferences
-        if status == .AuthorizedWhenInUse {
+        if status == .authorizedWhenInUse {
             startUpdatingLocation()
         } else {
             stopUpdatingLocation()
         }
-        
-        // send notification here to alert other view controllers using the location manager singleton
-        NSNotificationCenter.defaultCenter().postNotificationName(notificationKey!, object: status as? AnyObject)
-        
-        
     }
 }

@@ -10,8 +10,8 @@ import UIKit
 import CoreLocation
 
 protocol CityTableViewProtocol {
-    func newCitySelected(city:City)
-    func cityTableViewDismissed(resetToDefaultCity:Bool)
+    func newCitySelected(_ city:City)
+    func cityTableViewDismissed(_ resetToDefaultCity:Bool)
 }
 
 class CityTableViewController: UITableViewController, UISearchResultsUpdating, SearchCitiesProtocol {
@@ -40,7 +40,7 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
         super.viewDidLoad()
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // Set up the search view controller
         resultSearchController = UISearchController(searchResultsController: nil)
@@ -49,7 +49,7 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
         resultSearchController.searchBar.sizeToFit()
         
         // enable the search bar
-        resultSearchController.searchBar.userInteractionEnabled = true
+        resultSearchController.searchBar.isUserInteractionEnabled = true
         self.tableView.tableHeaderView = self.resultSearchController.searchBar
         
         // Initialize the search helper class variables
@@ -66,26 +66,30 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
     }
     
     // MARK: - Table view data source
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         
         // If this is the search results table view
-        if (resultSearchController.active) {
+        if (resultSearchController.isActive) {
             return 1
         } else {
             return numSections
         }
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if (self.resultSearchController.active) {
+        if (self.resultSearchController.isActive) {
             return filteredCities.count
         } else {
             switch section {
             case 0:
                 return 1
             case 1:
-                return model.citiesArrayCount()
+                if let citiesArray = model.retrieveCities() {
+                    return citiesArray.count
+                } else {
+                    return 1
+                }
                 
             default:
                 return 1
@@ -93,15 +97,15 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
         }
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let section = indexPath.section
-        let row = indexPath.row
+        let section = (indexPath as NSIndexPath).section
+        let row = (indexPath as NSIndexPath).row
         
         // If this is the search results table view add the search results
-        if (self.resultSearchController.active)
+        if (self.resultSearchController.isActive)
         {
-            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell?
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell?
 
             cell!.textLabel?.text = filteredCities[row].cityNameValue()
             
@@ -110,15 +114,20 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
         
         // User location
         if section == 0 {
-            let cell =  tableView.dequeueReusableCellWithIdentifier("userLocationCell", forIndexPath: indexPath)
-            cell.selectionStyle = .None
+            let cell =  tableView.dequeueReusableCell(withIdentifier: "userLocationCell", for: indexPath)
+            cell.selectionStyle = .none
             return cell
         }
         // Other saved cities
         else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("cityCustomCell", forIndexPath: indexPath) as! CityTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cityCustomCell", for: indexPath) as! CityTableViewCell
+            let city: City
             
-            let city = model.cityForRow(row)
+            if let citiesArray = model.retrieveCities() {
+                city = citiesArray[row]
+            } else {
+                city = model.cityForRow(row)
+            }
             cell.city = city
             cell.cityNameLabel.text = city.cityNameValue()
             cell.temperatureLabel.text = city.temperatureValue()!.description
@@ -132,9 +141,9 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
         }
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Search Table View
-        if (self.resultSearchController.active)
+        if (self.resultSearchController.isActive)
         {
             // Only can select if there is a returned value
             if filteredCities.count == 0 {
@@ -142,25 +151,31 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
             }
             
             // disable the search bar while we are dismissing
-            resultSearchController.searchBar.userInteractionEnabled = false
+            resultSearchController.searchBar.isUserInteractionEnabled = false
             
             // return the city for the selected cell
-            let selectedCity = filteredCities[indexPath.row]
+            let selectedCity = filteredCities[(indexPath as NSIndexPath).row]
             
             // Add the selected city to the original table view and reload
+            if let citiesArray = self.model.retrieveCities() {
+                // check for duplication
+                if !model.cityIsADuplicate(city: selectedCity, storedCities: citiesArray) {
+                    self.model.addCityToDefaults(city: selectedCity)
+                }
+            }
             model.addNewCity(selectedCity)
             
             // dismiss the search results table view and reload the old table with the new value added
-            dismissViewControllerAnimated(true, completion: nil)
+            dismiss(animated: true, completion: nil)
             tableView.reloadData()
             
             // enable the search bar now that we have successfully returned from the search
-            resultSearchController.searchBar.userInteractionEnabled = true
+            resultSearchController.searchBar.isUserInteractionEnabled = true
         }
         // Cities (Main) Table View
         else {
             // check type of cell before casting it
-            let cell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+            let cell:UITableViewCell = tableView.cellForRow(at: indexPath)!
             let cellType:String = cell.reuseIdentifier!
             
             switch cellType {
@@ -182,7 +197,7 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
             case "userLocationCell":
                 if locationManager.locationServicesEnabled() {
                     // If location is denied, remind the user of this
-                    if locationManager.authorizationStatus() == .Denied {
+                    if locationManager.authorizationStatus() == .denied {
                         showErrorAlert("Location Services Turned Off", message: "Change the location settings for this app in your phone's privacy settings to allow us to show the weather in your current location")
                         return
                     }
@@ -203,16 +218,16 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
     }
     
     // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         
         // Do not allow the search results table to be edited
-        if (self.resultSearchController.active)
+        if (self.resultSearchController.isActive)
         {
             return false
         }
         
         // Do not let the user edit the "Current Location" cell
-        if indexPath.section == 0 {
+        if (indexPath as NSIndexPath).section == 0 {
             return false
         }
         
@@ -221,46 +236,56 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
     }
     
     // Override to perform actions when edit/done button is pressed
-    override func setEditing(editing: Bool, animated: Bool) {
+    override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         
         // Disable the search bar when editing
         if editing {
-            resultSearchController.searchBar.userInteractionEnabled = false
+            resultSearchController.searchBar.isUserInteractionEnabled = false
         } else {
-            resultSearchController.searchBar.userInteractionEnabled = true
+            resultSearchController.searchBar.isUserInteractionEnabled = true
         }
     }
     
     // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            let row = indexPath.row
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let row = (indexPath as NSIndexPath).row
             
-            // Delete the row from the data source
-            if let shownCity = currentlyShownCity {
-                if model.cityForRow(row) == shownCity {
-                    // replace shown city with default city 
-                    shownCityDeleted = true
-                }
+            if var citiesArray = model.retrieveCities() {
+                updateCurrentlyShownCityIfNeeded(deletedCity: citiesArray[row])
+                model.removeCityFromDefaults(atIndex: row)
+            } else {
+                // Delete the row from the data source
+                updateCurrentlyShownCityIfNeeded(deletedCity: model.cityForRow(row))
             }
             
             // Delete the city from the array then the table view
-            model.removeCityFromRow(row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            //model.removeCityFromRow(row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
             
             // enable the search bar when we are finished editing
-            resultSearchController.searchBar.userInteractionEnabled = true
+            resultSearchController.searchBar.isUserInteractionEnabled = true
             resultSearchController.searchBar.placeholder = "Search by City Name or Postal Code"
         }
     }
     
+    func updateCurrentlyShownCityIfNeeded(deletedCity: City) {
+        // Delete the row from the data source
+        if let shownCity = currentlyShownCity {
+            if deletedCity == shownCity {
+                // replace shown city with default city
+                shownCityDeleted = true
+            }
+        }
+    }
+    
     // MARK: Helper Functions
-    func showErrorAlert(title:String, message:String) {
-        let alertViewController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let alertAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+    func showErrorAlert(_ title:String, message:String) {
+        let alertViewController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alertViewController.addAction(alertAction)
-        presentViewController(alertViewController, animated: true, completion: nil)
+        present(alertViewController, animated: true, completion: nil)
     }
     
     // Create a new City object for the current user location
@@ -274,6 +299,14 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
                         // Create a new city with SearchCities helper method
                         if let searcher = self.searcher {
                             let newCity = searcher.newCityFromCityDictionary(dictionary)
+                            
+                            // Add the selected city to the original table view and reload
+                            if let citiesArray = self.model.retrieveCities() {
+                                // check for duplication
+                                if !self.model.cityIsADuplicate(city: newCity, storedCities: citiesArray) {
+                                    self.model.addCityToDefaults(city: newCity)
+                                }
+                            }
                             
                             // Dismiss and pass the city back
                             if let delegate = self.delegate {
@@ -296,8 +329,8 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
     }
     
     // MARK: UISearchResultsUpdating
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        filteredCities.removeAll(keepCapacity: false)
+    func updateSearchResults(for searchController: UISearchController) {
+        filteredCities.removeAll(keepingCapacity: false)
         
         let searchPredicate:String = searchController.searchBar.text!
         
@@ -311,14 +344,14 @@ class CityTableViewController: UITableViewController, UISearchResultsUpdating, S
     }
     
     // MARK: SearchCitiesProtocol
-    func matchingCitiesFound(matchingCities: [City]) {
+    func matchingCitiesFound(_ matchingCities: [City]) {
         filteredCities = matchingCities
         self.tableView.reloadData()
     }
     
     // Actions
     
-    @IBAction func cancelButtonPressed(sender: UIBarButtonItem) {
+    @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
         
         if let delegate = delegate {
             delegate.cityTableViewDismissed(shownCityDeleted)

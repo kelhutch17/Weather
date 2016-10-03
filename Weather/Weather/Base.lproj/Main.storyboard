@@ -30,7 +30,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Fn0-OT-UK2"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="35"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -42,12 +42,12 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Right Now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8NQ-77-QvN">
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="55" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nDl-54-IIP">
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="22"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="22"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -56,17 +56,17 @@
                                             <constraint firstAttribute="height" constant="15" id="8GT-6L-NZT"/>
                                             <constraint firstAttribute="width" constant="15" id="XWi-oD-ZLs"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="21"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Low" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4MR-lZ-Uyo">
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="44" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JDL-Pg-u1Q">
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="22"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="22"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -75,12 +75,12 @@
                                             <constraint firstAttribute="width" constant="15" id="E1b-bm-IOu"/>
                                             <constraint firstAttribute="height" constant="15" id="cgL-Oa-c3s"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="21"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="55" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ku1-k4-uq2">
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="22"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="22"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -89,20 +89,21 @@
                                             <constraint firstAttribute="height" constant="15" id="KSa-75-G0I"/>
                                             <constraint firstAttribute="width" constant="15" id="oEh-sY-dWD"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="21"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="High" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7sT-7y-vGS">
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cloudy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3VZ-dd-kHn">
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="23"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="01d.png" translatesAutoresizingMaskIntoConstraints="NO" id="xfR-GZ-Nze"/>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZAL-8r-HQK" userLabel="Underline">
                                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <constraints>
@@ -121,6 +122,7 @@
                                     <constraint firstItem="9bU-ej-9dr" firstAttribute="leading" secondItem="JDL-Pg-u1Q" secondAttribute="trailing" constant="4" id="6Io-rf-Mpm"/>
                                     <constraint firstItem="nDl-54-IIP" firstAttribute="centerY" secondItem="8NQ-77-QvN" secondAttribute="centerY" id="8DZ-as-phP"/>
                                     <constraint firstItem="Go6-4U-C1i" firstAttribute="top" secondItem="ku1-k4-uq2" secondAttribute="top" id="EPO-eX-FA7"/>
+                                    <constraint firstItem="xfR-GZ-Nze" firstAttribute="top" secondItem="3VZ-dd-kHn" secondAttribute="bottom" constant="8" id="Kc5-Gg-1O1"/>
                                     <constraint firstItem="7sT-7y-vGS" firstAttribute="trailing" secondItem="8NQ-77-QvN" secondAttribute="trailing" id="MAb-vH-Mce"/>
                                     <constraint firstItem="7sT-7y-vGS" firstAttribute="top" secondItem="4MR-lZ-Uyo" secondAttribute="bottom" constant="8" id="MdD-RU-IQE"/>
                                     <constraint firstItem="8Da-w4-oye" firstAttribute="centerX" secondItem="vrD-ce-uEf" secondAttribute="centerX" id="RFb-OF-Ndg"/>
@@ -131,6 +133,7 @@
                                     <constraint firstItem="JDL-Pg-u1Q" firstAttribute="centerY" secondItem="4MR-lZ-Uyo" secondAttribute="centerY" id="XcE-sP-oAa"/>
                                     <constraint firstItem="4MR-lZ-Uyo" firstAttribute="top" secondItem="8NQ-77-QvN" secondAttribute="bottom" constant="8" id="YkQ-lN-2pB"/>
                                     <constraint firstItem="zwk-tC-aNO" firstAttribute="centerY" secondItem="vrD-ce-uEf" secondAttribute="centerY" id="acv-KL-vyf"/>
+                                    <constraint firstItem="xfR-GZ-Nze" firstAttribute="centerX" secondItem="3VZ-dd-kHn" secondAttribute="centerX" id="bz6-JY-Ccm"/>
                                     <constraint firstItem="4MR-lZ-Uyo" firstAttribute="trailing" secondItem="8NQ-77-QvN" secondAttribute="trailing" id="e9N-RC-eph"/>
                                     <constraint firstItem="JDL-Pg-u1Q" firstAttribute="leading" secondItem="nDl-54-IIP" secondAttribute="leading" id="gr6-8k-30i"/>
                                     <constraint firstItem="Go6-4U-C1i" firstAttribute="leading" secondItem="ku1-k4-uq2" secondAttribute="trailing" constant="4" id="hKh-Ip-wPN"/>
@@ -152,7 +155,7 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qud-Gy-lko">
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOADING..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1f4-Td-cJd">
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="25"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -189,6 +192,7 @@
                     <connections>
                         <outlet property="cityNameLabel" destination="8Da-w4-oye" id="XqM-BU-m08"/>
                         <outlet property="highTemperatureLabel" destination="ku1-k4-uq2" id="fQS-oE-6dE"/>
+                        <outlet property="icon" destination="xfR-GZ-Nze" id="PwS-zW-onu"/>
                         <outlet property="loadingOverlay" destination="qud-Gy-lko" id="20p-jw-57A"/>
                         <outlet property="lowTemperatureLabel" destination="JDL-Pg-u1Q" id="wFJ-fM-XZ1"/>
                         <outlet property="temperatureLabel" destination="nDl-54-IIP" id="qhG-0P-yTB"/>
@@ -197,7 +201,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1092" y="337"/>
+            <point key="canvasLocation" x="1092" y="336.88155922038982"/>
         </scene>
         <!--Cities-->
         <scene sceneID="cdS-ZD-20t">
@@ -357,6 +361,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="01d.png" width="50" height="50"/>
         <image name="clouds.jpg" width="480" height="800"/>
     </resources>
 </document>

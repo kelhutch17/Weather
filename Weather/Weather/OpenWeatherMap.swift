@@ -12,10 +12,10 @@ import CoreLocation
 class OpenWeatherMap: NSObject {
     
     // API Key
-    private let APIKey:String
+    fileprivate let APIKey:String
     
     // Base level URL to request data from
-    private let baseURL = "http://api.openweathermap.org/data/2.5"
+    fileprivate let baseURL = "http://api.openweathermap.org/data/2.5"
     
     // local variables
     var language:String
@@ -28,52 +28,52 @@ class OpenWeatherMap: NSObject {
     }
     
     // API Call Functions
-    func weatherForCityName(cityName: String, callback: (Dictionary<String, AnyObject>?) -> ()) {
+    func weatherForCityName(_ cityName: String, callback: @escaping (Dictionary<String, AnyObject>?) -> ()) {
         call("/weather?q=\(cityName.removeSpaces())", callback: callback)
     }
     
-    func weatherForCoordinate(coordinate: CLLocationCoordinate2D, callback: (Dictionary<String, AnyObject>?) -> ()) {
+    func weatherForCoordinate(_ coordinate: CLLocationCoordinate2D, callback: @escaping (Dictionary<String, AnyObject>?) -> ()) {
         let coordinateString = "lat=\(coordinate.latitude)&lon=\(coordinate.longitude)"
         call("/weather?\(coordinateString)", callback: callback)
     }
     
-    func weatherForCityID(cityId: Int, callback: (Dictionary<String, AnyObject>?) -> ()) {
-        call("/weather?id=\(cityId)", callback: callback)
+    func weatherForCityID(_ cityId: Int, callback: @escaping (Dictionary<String, AnyObject>?) -> ()) {
+        call("/weather?id=\(cityId)?appid=\(Model.apiKeyValue)", callback: callback)
     }
     
-    func findCityForName(cityName: String, callback: (Dictionary<String, AnyObject>?) -> ()) {
+    func findCityForName(_ cityName: String, callback: @escaping (Dictionary<String, AnyObject>?) -> ()) {
         call("/find?q=\(cityName.removeSpaces())", callback: callback)
     }
     
-    func findCityForCoordinate(coordinate: CLLocationCoordinate2D, callback: (Dictionary<String, AnyObject>?) -> ()) {
+    func findCityForCoordinate(_ coordinate: CLLocationCoordinate2D, callback: @escaping (Dictionary<String, AnyObject>?) -> ()) {
         call("/find?lat=\(coordinate.latitude)&lon=\(coordinate.longitude)", callback: callback)
     }
     
     // Main Call Function - opens the URL Session and gets the data back
-    private func call(operation: String, callback: (Dictionary<String, AnyObject>?) -> ()) {
+    fileprivate func call(_ operation: String, callback: @escaping (Dictionary<String, AnyObject>?) -> ()) {
         let urlPath = baseURL + operation + "&APPID=\(APIKey)&lang=\(language)&units=\(temperatureScale)"
-        let url = NSURL(string: urlPath)
+        let url = URL(string: urlPath)
         
         assert(url != nil, "URL is invalid")
         
-        let queue = NSOperationQueue.currentQueue()
+        let queue = OperationQueue.current
         
-        let session = NSURLSession.sharedSession()
-        session.dataTaskWithURL(url!, completionHandler: {
+        let session = URLSession.shared
+        session.dataTask(with: url!, completionHandler: {
             (data, response, error) -> Void in
             
-            var error: NSError? = error
+            var error: NSError? = error as NSError?
             var dictionary: Dictionary<String, AnyObject>?
             
             // Check for errors 
             if let data = data {
                 do {
-                    dictionary = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? Dictionary<String, AnyObject>
+                    dictionary = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? Dictionary<String, AnyObject>
                 } catch let e as NSError {
                     error = e
                 }
             }
-            queue?.addOperationWithBlock {
+            queue?.addOperation {
                 let result = dictionary
                 if error != nil {
                     NSLog((error?.description)!)

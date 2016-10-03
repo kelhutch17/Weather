@@ -31,3 +31,5 @@ DerivedData
 # Carthage/Checkouts
 
 Carthage/Build
+/Weather/.DS_Store
+/.DS_Store
